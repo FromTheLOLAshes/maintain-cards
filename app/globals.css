@@ -1,0 +1,304 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f7f6f2;
+  color: #252326;
+  font-family: "DM Sans", sans-serif;
+}
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+}
+.sidebar {
+  background: #211f2a;
+  color: #fbfaf7;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 10px 28px;
+}
+.brand b {
+  display: block;
+  font-family: "Playfair Display";
+  font-size: 23px;
+  letter-spacing: -0.6px;
+}
+.brand small,
+.card-row small {
+  display: block;
+  color: #aba7b2;
+  font-size: 12px;
+  margin-top: 1px;
+}
+.spark {
+  color: #e5bd78;
+  font-size: 24px;
+}
+.new-button {
+  border: 0;
+  border-radius: 8px;
+  background: #e6bb73;
+  color: #29232a;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 13px 15px;
+  text-align: left;
+  cursor: pointer;
+}
+.new-button span {
+  font-size: 19px;
+  vertical-align: -1px;
+  margin-right: 6px;
+}
+.search {
+  margin: 22px 2px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #302d3a;
+  border: 1px solid #3d3948;
+  border-radius: 7px;
+  padding: 0 10px;
+  color: #aaa6b2;
+}
+.search input {
+  background: transparent;
+  border: 0;
+  color: white;
+  width: 100%;
+  font: inherit;
+  padding: 10px 0;
+  outline: 0;
+}
+.search input::placeholder {
+  color: #9994a3;
+}
+.list-label {
+  display: flex;
+  justify-content: space-between;
+  font: 500 10px "DM Mono";
+  color: #8f8a98;
+  letter-spacing: 0.12em;
+  padding: 0 9px 10px;
+}
+.list-label em {
+  font-style: normal;
+  background: #383441;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.card-list {
+  overflow: auto;
+  margin: 0 -8px;
+  padding: 0 8px;
+}
+.card-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #f8f7f5;
+  padding: 9px;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  margin-bottom: 3px;
+}
+.card-row:hover {
+  background: #2c2935;
+}
+.card-row.selected {
+  background: #3b3746;
+  border-color: #504a59;
+}
+.card-row strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+.thumb {
+  width: 38px;
+  height: 46px;
+  flex: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #51495b;
+  display: grid;
+  place-items: center;
+  color: #e5bd78;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.list-message {
+  padding: 10px;
+  color: #9d99a5;
+  font-size: 16px;
+}
+.editor {
+  width: 100%;
+  padding: 54px 72px 80px;
+  margin: 0 auto;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 42px;
+}
+h1 {
+  font: 700 38px/1.08 "Playfair Display";
+  letter-spacing: -1px;
+  margin: 5px 0;
+}
+.eyebrow {
+  font: 500 10px "DM Mono";
+  letter-spacing: 0.14em;
+  color: #918a7e;
+  margin: 0;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #6d715c;
+  font-size: 13px;
+}
+.save {
+  border: 0;
+  background: #2b2830;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font: 600 16px "DM Sans";
+  cursor: pointer;
+}
+.save:disabled {
+  opacity: 0.6;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 23px 22px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5f5a55;
+}
+.field i {
+  font: 400 10px "DM Mono";
+  text-transform: uppercase;
+  color: #ad765c;
+  margin-left: 5px;
+}
+.field input,
+.field textarea {
+  border: 1px solid #d8d3ca;
+  background: #fffefa;
+  border-radius: 6px;
+  color: #29272a;
+  font: 400 16px "DM Sans";
+  padding: 11px 12px;
+  outline: none;
+  transition: 0.15s;
+}
+.field input:focus,
+.field textarea:focus {
+  border-color: #b18a50;
+  box-shadow: 0 0 0 3px #e8d9c233;
+}
+.field textarea {
+  min-height: 210px;
+  resize: vertical;
+  line-height: 1.45;
+}
+.long-description textarea {
+  min-height: 1200px;
+}
+.wide {
+  grid-column: 1/-1;
+}
+.rich-text-editor {
+  border: 1px solid #d8d3ca;
+  border-radius: 6px;
+  background: #fffefa;
+  overflow: hidden;
+}
+.rich-text-editor:focus-within { border-color: #b18a50; box-shadow: 0 0 0 3px #e8d9c233; }
+.rich-text-toolbar { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px; border-bottom: 1px solid #e3ded5; background: #f6f2e9; }
+.rich-text-toolbar button { border: 0; border-radius: 4px; background: transparent; color: #59534c; padding: 5px 8px; font: 500 13px "DM Sans"; cursor: pointer; }
+.rich-text-toolbar button:hover, .rich-text-toolbar button.active { background: #e2d0ad; color: #30291f; }
+.rich-text-content { min-height: 210px; padding: 13px; outline: none; color: #29272a; font: 400 16px/1.55 "DM Sans"; counter-reset: imported-list-item; }
+.long-description .rich-text-content { min-height: 600px; }
+.rich-text-content p:first-child { margin-top: 0; }
+.rich-text-content p:last-child { margin-bottom: 0; }
+.rich-text-content ul { padding-left: 24px; }
+.rich-text-content ol { margin: 0; padding-left: 28px; list-style: none; }
+.rich-text-content ol > li { position: relative; counter-increment: imported-list-item; }
+.rich-text-content ol > li::before { content: counter(imported-list-item) "."; position: absolute; right: 100%; margin-right: 7px; }
+.rich-text-content li { margin: 0; }
+.rich-text-content li p { margin: 0; }
+.rich-text-content p.is-editor-empty:first-child::before { color: #9f9a92; content: attr(data-placeholder); float: left; height: 0; pointer-events: none; }
+.rich-text-loading { min-height: 210px; border: 1px solid #d8d3ca; border-radius: 6px; background: #fffefa; }
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 34px 0 25px;
+  color: #918a7e;
+  font: 500 10px "DM Mono";
+  letter-spacing: 0.13em;
+}
+.divider:after {
+  content: "";
+  height: 1px;
+  background: #ded9d0;
+  flex: 1;
+}
+.meanings {
+  gap: 24px 22px;
+}
+@media (max-width: 750px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    min-height: 0;
+  }
+  .card-list {
+    max-height: 260px;
+  }
+  .editor {
+    padding: 34px 22px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  header {
+    gap: 20px;
+    flex-direction: column;
+  }
+  .wide {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "card-richtext-cleanup",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node --env-file=.env src/cleanup-rich-text.mjs --dry-run",
+    "apply": "node --env-file=.env src/cleanup-rich-text.mjs --apply"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
