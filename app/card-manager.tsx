@@ -35,6 +35,8 @@ export function CardManager() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
+  const [savedCard, setSavedCard] = useState(() => JSON.stringify(blank));
+  const isDirty = JSON.stringify(card) !== savedCard;
 
   async function load() {
     setLoading(true);
@@ -51,22 +53,36 @@ export function CardManager() {
   useEffect(() => {
     load();
   }, []);
+  useEffect(() => {
+    const warnBeforeExit = (event: BeforeUnloadEvent) => {
+      if (!isDirty) return;
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnBeforeExit);
+    return () => window.removeEventListener("beforeunload", warnBeforeExit);
+  }, [isDirty]);
   const visible = cards.filter((c) =>
     `${c.name} ${c.category} ${c.theme}`
       .toLowerCase()
       .includes(query.toLowerCase()),
   );
   function select(next: Card) {
+    if (next.id !== selectedId && isDirty && !window.confirm("You have unsaved changes. Leave this card without saving?")) return;
+    const nextCard = { ...next, description: next.description ?? emptyDocument };
     setSelectedId(next.id);
-    setCard({ ...next, description: next.description ?? emptyDocument });
+    setCard(nextCard);
+    setSavedCard(JSON.stringify(nextCard));
     setNotice("");
   }
   function update<K extends keyof Card>(field: K, value: Card[K]) {
     setCard((current) => ({ ...current, [field]: value }));
   }
   function newCard() {
+    if (isDirty && !window.confirm("You have unsaved changes. Start a new card without saving?")) return;
     setSelectedId(undefined);
     setCard(blank);
+    setSavedCard(JSON.stringify(blank));
     setNotice("");
   }
   async function save(event: FormEvent) {
@@ -89,7 +105,10 @@ export function CardManager() {
           ? current.map((c) => (c.id === selectedId ? data : c))
           : [...current, data].sort((a, b) => a.name.localeCompare(b.name)),
       );
-      select(data);
+      const saved = { ...data, description: data.description ?? emptyDocument };
+      setSelectedId(data.id);
+      setCard(saved);
+      setSavedCard(JSON.stringify(saved));
       setNotice(selectedId ? "Changes saved" : "Card created");
     } catch (e) {
       setNotice(e instanceof Error ? e.message : "Could not save card");
@@ -167,8 +186,9 @@ export function CardManager() {
           </div>
         </header>
         <form id="card-form" onSubmit={save}>
-          <div className="form-grid">
-            <label className="field name">
+          <div className="card-overview">
+            <div className="card-basics">
+              <label className="field name">
               <span>
                 Name <i>required</i>
               </span>
@@ -178,23 +198,23 @@ export function CardManager() {
                 onChange={(e) => update("name", e.target.value)}
                 placeholder="e.g. The Moon"
               />
-            </label>
-            <label className="field">
-              <span>Category</span>
-              <input
-                value={card.category}
-                onChange={(e) => update("category", e.target.value)}
-                placeholder="Major Arcana"
-              />
-            </label>
-            <label className="field">
+              </label>
+              <label className="field">
               <span>Theme</span>
               <input
                 value={card.theme ?? ''}
                 onChange={(e) => update("theme", e.target.value)}
                 placeholder="Intuition"
               />
-            </label>
+              </label>
+            </div>
+            <div className="image-preview">
+              {card.image_url ? (
+                <img src={card.image_url} alt={card.name || "Card"} />
+              ) : (
+                <span>✦ No image available</span>
+              )}
+            </div>
           </div>
           <div className="divider">
             <span>INTERPRETATION</span>
