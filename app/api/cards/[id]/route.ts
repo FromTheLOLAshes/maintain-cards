@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { ensureCardsTable, pool, readCard } from "@/lib/db";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (!await getServerSession(authOptions)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   await ensureCardsTable();
   const { id } = await params;
   const card = readCard(await request.json());

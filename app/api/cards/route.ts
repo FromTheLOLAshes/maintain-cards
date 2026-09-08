@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { ensureCardsTable, pool, readCard } from "@/lib/db";
 import { normalizeImportedRichText } from "@/lib/rich-text";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 
 export const dynamic = "force-dynamic";
 export async function GET() {
+  if (!await getServerSession(authOptions)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   await ensureCardsTable();
   const result = await pool.query(
     "SELECT id::text, name, image_url, upright, reversed, upright_description, reversed_description, category, description, theme FROM archetype_card ORDER BY name ASC, id ASC",
@@ -19,6 +22,7 @@ export async function GET() {
   return NextResponse.json(cards);
 }
 export async function POST(request: Request) {
+  if (!await getServerSession(authOptions)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   await ensureCardsTable();
   const card = readCard(await request.json());
   if (!card.name)
