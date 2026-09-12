@@ -15,7 +15,8 @@ export default function LoginPage() {
     setError("");
     const result = await signIn("credentials", { username, password, callbackUrl: "/", redirect: false });
     if (result?.error) { setError("Incorrect user ID or password."); setLoading(false); return; }
-    window.location.assign(result?.url || "/");
+    // Keep the redirect on the current host; NextAuth may otherwise return a local development URL.
+    window.location.assign("/");
   }
 
   return <main className="login-page"><form className="login-card" onSubmit={login}>
